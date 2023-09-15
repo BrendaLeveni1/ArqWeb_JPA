@@ -14,10 +14,6 @@ import javax.persistence.ManyToMany;
 public class Inscripcion {
 
 
-	@Override
-	public String toString() {
-		return "Torneo [id=" + id + ", nombreTorneo=" + nombreTorneo + ", equiposParticipantes=" + equipos_participantes
-				+ "]";
-	}
+
 
 }
