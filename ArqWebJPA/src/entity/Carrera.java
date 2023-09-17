@@ -2,24 +2,36 @@ package entity;
 
 import java.util.ArrayList;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-
-
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Carrera {
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@ManyToMany
 	private int id;
+	@Column(name = "nombre")
 	private String nombre;
-	private ArrayList<Estudiante>estudiantes;
-	 
-	
-	
+	//???
+	private ArrayList<Estudiante> estudiantes;
+
+	public Carrera() {
+		super();
+
+	}
+
 	public Carrera(int id, String nombre) {
 		this.id = id;
 		this.nombre = nombre;
 		this.estudiantes = new ArrayList<>();
 	}
- 
+
 	public int getId() {
 		return id;
 	}
@@ -35,7 +47,6 @@ public class Carrera {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
 
 	@Override
 	public String toString() {

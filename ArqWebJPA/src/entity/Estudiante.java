@@ -1,20 +1,32 @@
 package entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Estudiante {
 
+	@Column(name = "nombre")
 	private String nombre;
+	@Column(name = "apellido")
 	private String apellido;
+	@Column(name = "genero")
 	private String genero;
+	@Column(name = "ciudadDeResidencia")
 	private String ciudadDeResidencia;
+	@Column(name = "edad")
 	private int edad;
+	@Column(name = "nroDni")
+	@OneToMany
 	private int nroDni;
+	@Column(name = "nroLibreta")
 	private int nroLibreta;
-	
-	
-	
+
+	public Estudiante() {
+		super();
+	}
+
 	public Estudiante(String nombre, String apellido, String genero, String ciudadDeResidencia, int edad, int nroDni,
 			int nroLibreta) {
 		this.nombre = nombre;
@@ -84,7 +96,9 @@ public class Estudiante {
 
 	@Override
 	public String toString() {
-		return "Estudiante [nroDni=" + nroDni + ", nombre=" + nombre + ", apellido=" + apellido +  "nroLibreta=" + nroLibreta +", genero=" + genero + ", edad=" + edad +", ciudadDeResidencia=" + ciudadDeResidencia + ",]";
+		return "Estudiante [nroDni=" + nroDni + ", nombre=" + nombre + ", apellido=" + apellido + "nroLibreta="
+				+ nroLibreta + ", genero=" + genero + ", edad=" + edad + ", ciudadDeResidencia=" + ciudadDeResidencia
+				+ ",]";
 	}
 
 }
