@@ -19,14 +19,16 @@ public class Inscripcion {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int id_inscripcion;
 	@Column(name = "antiguedad")
 	private int antiguedad;
 	@Column(name = "graduado")
 	private Date graduado;
-	@ManyToMany(mappedBy = "carrera")
+	@Column (name = "idCarrera")
+	@ManyToMany
 	private Carrera idCarrera;
-	@ManyToOne(mappedBy = "estudiante")
+	@Column (name = "nroDni")
+	@ManyToOne
 	private Estudiante nroDni;
 	
 	
@@ -34,21 +36,21 @@ public class Inscripcion {
 	public Inscripcion() {
 	}
 
-	public Inscripcion(int id, int antiguedad, Date graduado, Carrera idCarrera, Estudiante nroDni) {
+	public Inscripcion(int id_inscripcion, int antiguedad, Date graduado, Carrera idCarrera, Estudiante nroDni) {
 
-		this.id = id;
+		this.id_inscripcion = id_inscripcion;
 		this.antiguedad = antiguedad;
 		this.graduado = graduado;
 		this.idCarrera = idCarrera;
 		this.nroDni = nroDni;
 	}
 
-	public int getId() {
-		return id;
+	public int getIdInscripcion() {
+		return id_inscripcion;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setIdInscripcion(int id_inscripcion) {
+		this.id_inscripcion = id_inscripcion;
 	}
 
 	public int getAntiguedad() {
@@ -84,7 +86,7 @@ public class Inscripcion {
 	}
 
 	public String toString() {
-		return "Inscripcion [id=" + id + ", antiguedad=" + antiguedad + ", graduado=" + graduado + "idCarrera="
+		return "Inscripcion [id_inscripcion=" + id_inscripcion + ", antiguedad=" + antiguedad + ", graduado=" + graduado + "idCarrera="
 				+ idCarrera + ", nroDni=" + nroDni + ",]";
 	}
 

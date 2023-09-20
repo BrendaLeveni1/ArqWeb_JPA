@@ -1,7 +1,10 @@
 package entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -17,8 +20,9 @@ public class Estudiante {
 	private String ciudadDeResidencia;
 	@Column(name = "edad")
 	private int edad;
+	@OneToMany(mappedBy = "inscripcion", fetch = FetchType.EAGER)
+	private List <Inscripcion> id_inscripcion;
 	@Column(name = "nroDni")
-	@OneToMany
 	private int nroDni;
 	@Column(name = "nroLibreta")
 	private int nroLibreta;
@@ -102,3 +106,4 @@ public class Estudiante {
 	}
 
 }
+

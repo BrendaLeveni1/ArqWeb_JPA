@@ -1,9 +1,11 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,11 +16,13 @@ public class Carrera {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@ManyToMany
+	@ManyToMany(mappedBy = "inscripcion", fetch = FetchType.LAZY)
+	private List<Inscripcion> id_inscripcion;
+	@Column(name = "id")
 	private int id;
 	@Column(name = "nombre")
 	private String nombre;
-	//???
+	// ??
 	private ArrayList<Estudiante> estudiantes;
 
 	public Carrera() {
