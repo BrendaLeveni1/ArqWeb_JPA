@@ -26,6 +26,7 @@ public class Estudiante {
 	private int nroDni;
 	@Column(name = "nroLibreta")
 	private int nroLibreta;
+	private ArrayList <Carrera>carreras;
 
 	public Estudiante() {
 		super();
@@ -40,8 +41,19 @@ public class Estudiante {
 		this.edad = edad;
 		this.nroDni = nroDni;
 		this.nroLibreta = nroLibreta;
+		this.carreras = new ArrayList <>();
 	}
-
+	
+	public boolean contieneCarrera (Carrera c) {
+		return carreras.contains(c);
+	}
+	
+	public boolean addCarrera (Carrera c) {
+		return carreras.add(c);
+	}
+	public void eliminarCarrera(Carrera c) {
+		carreras.remove(c);
+	}
 	public String getNombre() {
 		return nombre;
 	}

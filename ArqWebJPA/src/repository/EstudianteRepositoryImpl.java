@@ -15,34 +15,51 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
 	}
 
 	@Override
+	// este devuelve un estudiante por su nroDni que seria el nro de libreta
 	public Estudiante findById(Integer nroDni) {
 		return RepositoryFactory.getEntity_manager().find(Estudiante.class, nroDni);
 	}
 
 	@Override
 	public List<Estudiante> findAll() {
-		return RepositoryFactory.getEntity_manager().createQuery("SELECT p FROM Estudiante e", Estudiante.class)
-				.getResultList();
+		return RepositoryFactory.getEntity_manager()
+				.createQuery("SELECT e FROM Estudiante e ORDER BY e.nroDni", Estudiante.class).getResultList();
+	}
+
+	// lista los estudiantes por genero
+	public List<Estudiante> xGenero(String g) {
+		String consulta = "SELECT e FROM Estudiante e WHERE e.genero LIKE :generoParametro ORDER BY e.apellido, e.nombre";
+		TypedQuery<Estudiante> query = RepositoryFactory.getEntity_manager().createQuery(consulta, Estudiante.class);
+		query.setParameter("generoParametro", "%" + g + "%");
+		return query.getResultList();
 	}
 
 	@Override
+	// guarda un nuevo estudiante
 	public Estudiante save(Estudiante estudiante) {
+
 		RepositoryFactory.getEntity_manager().getTransaction().begin();
 		if (estudiante.getNroDni() == 0) {
 			RepositoryFactory.getEntity_manager().persist(estudiante);
-			RepositoryFactory.getEntity_manager().getTransaction().commit();
-			RepositoryFactory.cerrar_conexion();
-			return estudiante;
+		} else {
+			estudiante = RepositoryFactory.getEntity_manager().merge(estudiante);
 		}
-		estudiante = RepositoryFactory.getEntity_manager().merge(estudiante);
 		RepositoryFactory.getEntity_manager().getTransaction().commit();
 		RepositoryFactory.cerrar_conexion();
 		return estudiante;
-
 	}
 
 	@Override
-	public void delete(Estudiante estudiante) {
-		RepositoryFactory.getEntity_manager().remove(estudiante);
+	public void delete(Estudiante Estudiante) {
+		RepositoryFactory.getEntity_manager().remove(Estudiante);
 	}
+
+	public List<Estudiante> xCarreraYciudad(Carrera carrera, String ciudad) {
+		String consulta = "SELECT e FROM Estudiante e JOIN e.carreras c WHERE c = :carr AND e.ciudadDeResidencia LIKE :city";
+		TypedQuery<Estudiante> query = RepositoryFactory.getEntity_manager().createQuery(consulta, Estudiante.class);
+		query.setParameter("carr", carrera);
+		query.setParameter("city", "%" + ciudad + "%");
+		return query.getResultList();
+	}
+
 }

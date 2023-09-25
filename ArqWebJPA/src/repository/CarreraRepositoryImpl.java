@@ -1,5 +1,6 @@
 package repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import entity.Carrera;
 
@@ -16,13 +17,12 @@ public class CarreraRepositoryImpl implements CarreraRepository {
 
 	@Override
 	public Carrera findById(Integer id) {
-
 		return RepositoryFactory.getEntity_manager().find(Carrera.class, id);
 	}
 
 	@Override
 	public List<Carrera> findAll() {
-		return RepositoryFactory.getEntity_manager().createQuery("SELECT p FROM Carrera c", Carrera.class)
+		return RepositoryFactory.getEntity_manager().createQuery("SELECT e FROM Carrera c", Carrera.class)
 				.getResultList();
 	}
 
@@ -31,18 +31,52 @@ public class CarreraRepositoryImpl implements CarreraRepository {
 		RepositoryFactory.getEntity_manager().getTransaction().begin();
 		if (carrera.getId() == 0) {
 			RepositoryFactory.getEntity_manager().persist(carrera);
-			RepositoryFactory.getEntity_manager().getTransaction().commit();
-			RepositoryFactory.cerrar_conexion();
-			return carrera;
+		} else {
+			carrera = RepositoryFactory.getEntity_manager().merge(carrera);
 		}
-		carrera =RepositoryFactory.getEntity_manager().merge(carrera);
+
 		RepositoryFactory.getEntity_manager().getTransaction().commit();
 		RepositoryFactory.cerrar_conexion();
 		return carrera;
+
 	}
 
 	@Override
-	public void delete(Carrera carrera) {
-		RepositoryFactory.getEntity_manager().remove(carrera);
+	public void delete(Carrera Carrera) {
+		RepositoryFactory.getEntity_manager().remove(Carrera);
 	}
+
+	public List<CarreraYCantidadDTO> xEstudiantesInscriptos() {
+		// f) recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad
+		// de inscriptos.
+		String consulta = "SELECT NEW dtos.CarreraYCantidadDTO(c, SIZE(c.estudiantes)) FROM Carrera c ORDER BY SIZE(c.estudiantes)";
+
+		// String consulta = "SELECT c, SIZE(c.estudiantes) as cantidad FROM Carrera c ORDER BY SIZE(c.estudiantes) ";
+		return RepositoryFactory.getEntity_manager().createQuery(consulta, CarreraYCantidadDTO.class).getResultList();
+	}
+
+	/**
+	 * Generar un reporte de las carreras, que para cada carrera incluya información
+	 * de los
+	 * inscriptos y egresados por año. Se deben ordenar las carreras
+	 * alfabéticamente, y presentar
+	 * los años de manera cronológica
+	 */
+	public List<EstudianteCarreraDTO> reporte() {
+		String consulta = "SELECT NEW dtos.EstudianteCarreraDTO(c , e, i, i.anioIngreso as fech) FROM Inscripto i JOIN i.estudiante e JOIN i.carrera c";
+		TypedQuery<EstudianteCarreraDTO> query = RepositoryFactory.getEntity_manager().createQuery(consulta,
+				EstudianteCarreraDTO.class);
+		List<EstudianteCarreraDTO> ingresos = query.getResultList();
+
+		consulta = "SELECT NEW dtos.EstudianteCarreraDTO(c , e, i, i.anioEgreso as fech) FROM Inscripto i JOIN i.estudiante e JOIN i.carrera c WHERE i.anioEgreso IS NOT NULL AND i.anioEgreso <> 0";
+		query = RepositoryFactory.getEntity_manager().createQuery(consulta, EstudianteCarreraDTO.class);
+		List<EstudianteCarreraDTO> egrersos = query.getResultList();
+
+		List<EstudianteCarreraDTO> resultados = new ArrayList<>();
+		resultados.addAll(ingresos);
+		resultados.addAll(egrersos);
+
+		return resultados;
+	}
+
 }
