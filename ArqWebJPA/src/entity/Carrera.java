@@ -13,11 +13,10 @@ import javax.persistence.ManyToMany;
 
 @Entity
 public class Carrera {
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@ManyToMany(mappedBy = "inscripcion", fetch = FetchType.LAZY)
 	private List<Inscripcion> id_inscripcion;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 	@Column(name = "nombre")
