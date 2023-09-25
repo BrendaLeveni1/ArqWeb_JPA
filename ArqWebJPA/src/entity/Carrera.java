@@ -1,111 +1,83 @@
 package entity;
 
-import java.util.Date;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-
 
 @Entity
-public class Inscripcion {
-
+public class Carrera {
+	@ManyToMany(mappedBy = "inscripcion", fetch = FetchType.LAZY)
+	private List<Inscripcion> id_inscripcion;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id_inscripcion;
-	@Column(name = "antiguedad")
-	private int antiguedad;
-	@Column(name = "graduado")
-	private Date graduado;
-	@Column (name = "idCarrera")
-	@ManyToMany
-	private Carrera idCarrera;
-	@Column (name = "nroDni")
-	@ManyToOne
-	private Estudiante nroDni;
+	@Column(name = "id")
+	private int id;
+	@Column(name = "nombre")
+	private String nombre;
+	// ??
+	private ArrayList<Estudiante> estudiantes;
 	@Column
-	private int anioIngreso;
+	private int duracion;
 
 	@Column
-	private int anioEgreso;
+	private String institucion;
+
+	public Carrera() {
+		super();
+
+	}
+
+	public Carrera(int id, String nombre, int duracion, String institucion) {
+		this.duracion = duracion;
+		this.institucion = institucion;
+		this.id = id;
+		this.nombre = nombre;
+		this.estudiantes = new ArrayList<>();
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 	
-	
-
-	public Inscripcion() {
+	public int getDuracion() {
+		return duracion;
 	}
 
-	public Inscripcion(int id_inscripcion, int antiguedad, Date graduado, Carrera idCarrera, Estudiante nroDni,int anioIngreso) {
-
-		this.id_inscripcion = id_inscripcion;
-		this.antiguedad = antiguedad;
-		this.graduado = graduado;
-		this.idCarrera = idCarrera;
-		this.nroDni = nroDni;
-		this.anioIngreso = anioIngreso;
+	public void setDuracion(int duracion) {
+		this.duracion = duracion;
 	}
 
-	public int getIdInscripcion() {
-		return id_inscripcion;
+	public String getInstitucion() {
+		return institucion;
 	}
 
-	public void setIdInscripcion(int id_inscripcion) {
-		this.id_inscripcion = id_inscripcion;
+	public void setInstitucion(String institucion) {
+		this.institucion = institucion;
 	}
 
-	public int getAntiguedad() {
-		return antiguedad;
-	}
-
-	public void setAntiguedad(int antiguedad) {
-		this.antiguedad = antiguedad;
-	}
-
-	public Date getGraduado() {
-		return graduado;
-	}
-
-	public void setGraduado(Date graduado) {
-		this.graduado = graduado;
-	}
-
-	public Carrera getIdCarrera() {
-		return idCarrera;
-	}
-
-	public void setIdCarrera(Carrera idCarrera) {
-		this.idCarrera = idCarrera;
-	}
-
-	public Estudiante getNroDni() {
-		return nroDni;
-	}
-
-	public void setNroDni(Estudiante nroDni) {
-		this.nroDni = nroDni;
-	}
-	public int getAnioIngreso() {
-		return anioIngreso;
-	}
-
-	public void setAnioEgreso(int anio) {
-		this.anioEgreso = anio;
-	}
-	public int getAnioEgreso() {
-		return anioEgreso;
-	}
-
+	@Override
 	public String toString() {
-		return "Inscripcion [id_inscripcion=" + id_inscripcion + ", antiguedad=" + antiguedad + ", graduado=" + graduado + "idCarrera="
-				+ idCarrera + ", nroDni=" + nroDni + ", anioIngreso="
-						+ anioIngreso
-						+ ", anioEgreso=" + anioEgreso + ",]";
+		return "Carrera [id=" + id + ", nombre=" + nombre + ", estudiantes=" + estudiantes + ", duracion= " + duracion + ", institucion= "
+		+ institucion + "]";
 	}
 
 }

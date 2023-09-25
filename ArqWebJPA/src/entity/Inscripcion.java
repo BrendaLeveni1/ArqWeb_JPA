@@ -1,18 +1,18 @@
 package entity;
 
 import java.util.Date;
-
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-
+import javax.persistence.OneToMany;
 
 @Entity
 public class Inscripcion {
@@ -35,22 +35,18 @@ public class Inscripcion {
 
 	@Column
 	private int anioEgreso;
-	
-	
 
 	public Inscripcion() {
 	}
 
-	public Inscripcion(int id_inscripcion, int antiguedad, Date graduado, Carrera idCarrera, Estudiante nroDni,int anioIngreso) {
-
+	public Inscripcion(int id_inscripcion, int antiguedad, Date graduado, Carrera idCarrera, Estudiante nroDni, int anioIngreso) {
+		this.anioIngreso = anioIngreso;
 		this.id_inscripcion = id_inscripcion;
 		this.antiguedad = antiguedad;
 		this.graduado = graduado;
 		this.idCarrera = idCarrera;
 		this.nroDni = nroDni;
-		this.anioIngreso = anioIngreso;
 	}
-
 	public int getIdInscripcion() {
 		return id_inscripcion;
 	}
@@ -90,16 +86,19 @@ public class Inscripcion {
 	public void setNroDni(Estudiante nroDni) {
 		this.nroDni = nroDni;
 	}
-	public int getAnioIngreso() {
-		return anioIngreso;
-	}
 
-	public void setAnioEgreso(int anio) {
-		this.anioEgreso = anio;
-	}
-	public int getAnioEgreso() {
-		return anioEgreso;
-	}
+public int getAnioIngreso() {
+	return anioIngreso;
+}
+
+public void setAnioEgreso(int anio) {
+	this.anioEgreso = anio;
+}
+public int getAnioEgreso() {
+	return anioEgreso;
+}
+
+
 
 	public String toString() {
 		return "Inscripcion [id_inscripcion=" + id_inscripcion + ", antiguedad=" + antiguedad + ", graduado=" + graduado + "idCarrera="
