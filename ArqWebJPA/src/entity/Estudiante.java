@@ -27,7 +27,6 @@ public class Estudiante {
 	private int nroDni;
 	@Column(name = "nroLibreta")
 	private int nroLibreta;
-	
 	private ArrayList <Carrera>carreras;
 
 	public Estudiante() {

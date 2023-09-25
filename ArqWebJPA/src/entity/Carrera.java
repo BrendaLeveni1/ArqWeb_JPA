@@ -21,11 +21,9 @@ public class Carrera {
 	private int id;
 	@Column(name = "nombre")
 	private String nombre;
-	// ??
 	private ArrayList<Estudiante> estudiantes;
 	@Column
 	private int duracion;
-
 	@Column
 	private String institucion;
 
