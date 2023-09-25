@@ -29,7 +29,7 @@ public class CarreraRepositoryImpl implements CarreraRepository {
 	@Override
 	public Carrera save(Carrera carrera) {
 		RepositoryFactory.getEntity_manager().getTransaction().begin();
-		if (carrera.getId() == null) {
+		if (carrera.getId() == 0) {
 			RepositoryFactory.getEntity_manager().persist(carrera);
 			RepositoryFactory.getEntity_manager().getTransaction().commit();
 			RepositoryFactory.cerrar_conexion();

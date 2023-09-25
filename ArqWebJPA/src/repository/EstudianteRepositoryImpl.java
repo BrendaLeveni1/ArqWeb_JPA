@@ -28,7 +28,7 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
 	@Override
 	public Estudiante save(Estudiante estudiante) {
 		RepositoryFactory.getEntity_manager().getTransaction().begin();
-		if (estudiante.getNroDni() == null) {
+		if (estudiante.getNroDni() == 0) {
 			RepositoryFactory.getEntity_manager().persist(estudiante);
 			RepositoryFactory.getEntity_manager().getTransaction().commit();
 			RepositoryFactory.cerrar_conexion();
