@@ -21,8 +21,8 @@ public class InscripcionRepositoryImpl implements InscripcionRepository {
 	}
 
 	@Override
-	public Inscripcion findById(Integer id) {
-		return RepositoryFactory.getEntity_manager().find(Inscripcion.class, id);
+	public Inscripcion findById(Integer id_inscripcion) {
+		return RepositoryFactory.getEntity_manager().find(Inscripcion.class, id_inscripcion);
 	}
 	// mira esta funcion
    //public void setEgreso(Estudiante e, Carrera c, Date graduado) {
@@ -39,7 +39,7 @@ public class InscripcionRepositoryImpl implements InscripcionRepository {
 
 	@Override
 	public List<Inscripcion> findAll() {
-		return RepositoryFactory.getEntity_manager().createQuery("SELECT e FROM Inscripcion e", Inscripcion.class)
+		return RepositoryFactory.getEntity_manager().createQuery("SELECT e FROM Inscripcion i", Inscripcion.class)
 				.getResultList();
 	}
 

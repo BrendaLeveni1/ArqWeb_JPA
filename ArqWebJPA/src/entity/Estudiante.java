@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -26,6 +27,7 @@ public class Estudiante {
 	private int nroDni;
 	@Column(name = "nroLibreta")
 	private int nroLibreta;
+	
 	private ArrayList <Carrera>carreras;
 
 	public Estudiante() {
@@ -118,4 +120,3 @@ public class Estudiante {
 	}
 
 }
-

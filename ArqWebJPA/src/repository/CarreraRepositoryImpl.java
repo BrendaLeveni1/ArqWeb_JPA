@@ -51,24 +51,23 @@ public class CarreraRepositoryImpl implements CarreraRepository {
 		// de inscriptos.
 		String consulta = "SELECT NEW dtos.CarreraYCantidadDTO(c, SIZE(c.estudiantes)) FROM Carrera c ORDER BY SIZE(c.estudiantes)";
 
-		// String consulta = "SELECT c, SIZE(c.estudiantes) as cantidad FROM Carrera c ORDER BY SIZE(c.estudiantes) ";
+		// String consulta = "SELECT c, SIZE(c.estudiantes) as cantidad FROM Carrera c
+		// ORDER BY SIZE(c.estudiantes) ";
 		return RepositoryFactory.getEntity_manager().createQuery(consulta, CarreraYCantidadDTO.class).getResultList();
 	}
 
 	/**
 	 * Generar un reporte de las carreras, que para cada carrera incluya información
-	 * de los
-	 * inscriptos y egresados por año. Se deben ordenar las carreras
-	 * alfabéticamente, y presentar
-	 * los años de manera cronológica
+	 * de los inscriptos y egresados por año. Se deben ordenar las carreras
+	 * alfabéticamente, y presentar los años de manera cronológica
 	 */
 	public List<EstudianteCarreraDTO> reporte() {
-		String consulta = "SELECT NEW dtos.EstudianteCarreraDTO(c , e, i, i.anioIngreso as fech) FROM Inscripto i JOIN i.estudiante e JOIN i.carrera c";
+		String consulta = "SELECT NEW dtos.EstudianteCarreraDTO(c , e, i, i.anioIngreso as fech) FROM Inscripcion i JOIN i.estudiante e JOIN i.carrera c";
 		TypedQuery<EstudianteCarreraDTO> query = RepositoryFactory.getEntity_manager().createQuery(consulta,
 				EstudianteCarreraDTO.class);
 		List<EstudianteCarreraDTO> ingresos = query.getResultList();
 
-		consulta = "SELECT NEW dtos.EstudianteCarreraDTO(c , e, i, i.anioEgreso as fech) FROM Inscripto i JOIN i.estudiante e JOIN i.carrera c WHERE i.anioEgreso IS NOT NULL AND i.anioEgreso <> 0";
+		consulta = "SELECT NEW dtos.EstudianteCarreraDTO(c , e, i, i.anioEgreso as fech) FROM Inscripcion i JOIN i.estudiante e JOIN i.carrera c WHERE i.anioEgreso IS NOT NULL AND i.anioEgreso <> 0";
 		query = RepositoryFactory.getEntity_manager().createQuery(consulta, EstudianteCarreraDTO.class);
 		List<EstudianteCarreraDTO> egrersos = query.getResultList();
 
@@ -78,5 +77,4 @@ public class CarreraRepositoryImpl implements CarreraRepository {
 
 		return resultados;
 	}
-
 }
