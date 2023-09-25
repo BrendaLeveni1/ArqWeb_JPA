@@ -20,10 +20,6 @@ public class Inscripcion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id_inscripcion;
-	@Column(name = "antiguedad")
-	private int antiguedad;
-	@Column(name = "graduado")
-	private Date graduado;
 	@Column (name = "idCarrera")
 	@ManyToMany
 	private Carrera idCarrera;
