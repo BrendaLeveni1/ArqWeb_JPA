@@ -46,34 +46,25 @@ public class CarreraRepositoryImpl implements CarreraRepository {
 		RepositoryFactory.getEntity_manager().remove(Carrera);
 	}
 
-	public List<CarreraYCantidadDTO> xEstudiantesInscriptos() {
-		// f) recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad
-		// de inscriptos.
-		String consulta = "SELECT NEW dtos.CarreraYCantidadDTO(c, SIZE(c.estudiantes)) FROM Carrera c ORDER BY SIZE(c.estudiantes)";
-
-		// String consulta = "SELECT c, SIZE(c.estudiantes) as cantidad FROM Carrera c
-		// ORDER BY SIZE(c.estudiantes) ";
-		return RepositoryFactory.getEntity_manager().createQuery(consulta, CarreraYCantidadDTO.class).getResultList();
+	public List<CarreraYInscripcionDTO> xEstudiantesInscriptos() {
+		String consulta = "SELECT NEW dtos.CarreraYInscripcionDTO(c, SIZE(c.estudiantes)) FROM Carrera c ORDER BY SIZE(c.estudiantes)";
+		return RepositoryFactory.getEntity_manager().createQuery(consulta, CarreraYInscripcionDTO.class).getResultList();
 	}
 
-	/**
-	 * Generar un reporte de las carreras, que para cada carrera incluya información
-	 * de los inscriptos y egresados por año. Se deben ordenar las carreras
-	 * alfabéticamente, y presentar los años de manera cronológica
-	 */
-	public List<EstudianteCarreraDTO> reporte() {
-		String consulta = "SELECT NEW dtos.EstudianteCarreraDTO(c , e, i, i.anioIngreso as fech) FROM Inscripcion i JOIN i.estudiante e JOIN i.carrera c";
-		TypedQuery<EstudianteCarreraDTO> query = RepositoryFactory.getEntity_manager().createQuery(consulta,
-				EstudianteCarreraDTO.class);
-		List<EstudianteCarreraDTO> ingresos = query.getResultList();
+	
+	public List<EstudianteDTO> reporte() {
+		String consulta = "SELECT NEW dtos.EstudianteDTO(c , e, i, i.anioIngreso as fech) FROM Inscripcion i JOIN i.estudiante e JOIN i.carrera c";
+		TypedQuery<EstudianteDTO> query = RepositoryFactory.getEntity_manager().createQuery(consulta,
+				EstudianteDTO.class);
+		List<EstudianteDTO> ingresos = query.getResultList();
 
-		consulta = "SELECT NEW dtos.EstudianteCarreraDTO(c , e, i, i.anioEgreso as fech) FROM Inscripcion i JOIN i.estudiante e JOIN i.carrera c WHERE i.anioEgreso IS NOT NULL AND i.anioEgreso <> 0";
-		query = RepositoryFactory.getEntity_manager().createQuery(consulta, EstudianteCarreraDTO.class);
-		List<EstudianteCarreraDTO> egrersos = query.getResultList();
+		consulta = "SELECT NEW dtos.EstudianteDTO(c , e, i, i.anioEgreso as fech) FROM Inscripcion i JOIN i.estudiante e JOIN i.carrera c WHERE i.anioEgreso IS NOT NULL AND i.anioEgreso <> 0";
+		query = RepositoryFactory.getEntity_manager().createQuery(consulta, EstudianteDTO.class);
+		List<EstudianteDTO> egresos = query.getResultList();
 
-		List<EstudianteCarreraDTO> resultados = new ArrayList<>();
+		List<EstudianteDTO> resultados = new ArrayList<>();
 		resultados.addAll(ingresos);
-		resultados.addAll(egrersos);
+		resultados.addAll(egresos);
 
 		return resultados;
 	}

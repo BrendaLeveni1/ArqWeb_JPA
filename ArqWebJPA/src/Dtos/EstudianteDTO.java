@@ -17,7 +17,7 @@ public class EstudianteCarreraDTO {
         this.estudiante = estudiante;
         this.carrera = carrera;
         this.inscripcion= inscripcion;
-        this.fech=fech; //esta fecha se corresponde tanto como ingreso como egreso
+        this.fech=fech; 
     }
 
     @Override

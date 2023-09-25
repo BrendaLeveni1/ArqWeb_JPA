@@ -24,24 +24,15 @@ public class InscripcionRepositoryImpl implements InscripcionRepository {
 	public Inscripcion findById(Integer id_inscripcion) {
 		return RepositoryFactory.getEntity_manager().find(Inscripcion.class, id_inscripcion);
 	}
-	public void setEgreso(Estudiante e, Carrera c, int anioEgreso) {
-		RepositoryFactory.getEntity_manager().getTransaction().begin();
-		TypedQuery<Inscripcion> i = RepositoryFactory.getEntity_manager().createQuery(
-				"SELECT i FROM Inscripto i WHERE carrera= :carr AND nro_libreta=:libreta", Inscripcion.class);
-		i.setParameter("libreta", e);
-		i.setParameter("carr", c);
-		Inscripcion inscripcion = i.getSingleResult();
-		inscripcion.setAnioEgreso(anioEgreso);
-		RepositoryFactory.getEntity_manager().getTransaction().commit();
-		RepositoryFactory.cerrar_conexion();
-	}
 
+
+	
 	@Override
 	public List<Inscripcion> findAll() {
 		return RepositoryFactory.getEntity_manager().createQuery("SELECT e FROM Inscripcion i", Inscripcion.class)
-				.getResultList();
+		.getResultList();
 	}
-
+	
 	@Override
 	public Inscripcion save(Inscripcion Inscripcion) {
 		RepositoryFactory.getEntity_manager().getTransaction().begin();
@@ -58,6 +49,18 @@ public class InscripcionRepositoryImpl implements InscripcionRepository {
 	@Override
 	public void delete(Inscripcion Inscripcion) {
 		RepositoryFactory.getEntity_manager().remove(Inscripcion);
+	}
+
+	public void setEgreso(Estudiante e, Carrera c, int anioEgreso) {
+		RepositoryFactory.getEntity_manager().getTransaction().begin();
+		TypedQuery<Inscripcion> i = RepositoryFactory.getEntity_manager().createQuery(
+				"SELECT i FROM Inscripto i WHERE carrera= :carrera AND nroLibreta=:libreta", Inscripcion.class);
+		i.setParameter("libreta", e);
+		i.setParameter("carrera", c);
+		Inscripcion inscripcion = i.getSingleResult();
+		inscripcion.setAnioEgreso(anioEgreso);
+		RepositoryFactory.getEntity_manager().getTransaction().commit();
+		RepositoryFactory.cerrar_conexion();
 	}
 
 }

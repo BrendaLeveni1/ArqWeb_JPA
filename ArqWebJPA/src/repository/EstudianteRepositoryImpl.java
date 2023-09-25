@@ -15,7 +15,7 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
 	}
 
 	@Override
-	// este devuelve un estudiante por su nroDni que seria el nro de libreta
+
 	public Estudiante findById(Integer nroDni) {
 		return RepositoryFactory.getEntity_manager().find(Estudiante.class, nroDni);
 	}
@@ -26,16 +26,8 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
 				.createQuery("SELECT e FROM Estudiante e ORDER BY e.nroDni", Estudiante.class).getResultList();
 	}
 
-	// lista los estudiantes por genero
-	public List<Estudiante> xGenero(String g) {
-		String consulta = "SELECT e FROM Estudiante e WHERE e.genero LIKE :generoParametro ORDER BY e.apellido, e.nombre";
-		TypedQuery<Estudiante> query = RepositoryFactory.getEntity_manager().createQuery(consulta, Estudiante.class);
-		query.setParameter("generoParametro", "%" + g + "%");
-		return query.getResultList();
-	}
-
 	@Override
-	// guarda un nuevo estudiante
+
 	public Estudiante save(Estudiante estudiante) {
 
 		RepositoryFactory.getEntity_manager().getTransaction().begin();
@@ -48,6 +40,14 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
 		RepositoryFactory.cerrar_conexion();
 		return estudiante;
 	}
+
+	public List<Estudiante> xGenero(String g) {
+		String consulta = "SELECT e FROM Estudiante e WHERE e.genero LIKE :generoParametro ORDER BY e.apellido, e.nombre";
+		TypedQuery<Estudiante> query = RepositoryFactory.getEntity_manager().createQuery(consulta, Estudiante.class);
+		query.setParameter("generoParametro", "%" + g + "%");
+		return query.getResultList();
+	}
+
 
 	@Override
 	public void delete(Estudiante Estudiante) {

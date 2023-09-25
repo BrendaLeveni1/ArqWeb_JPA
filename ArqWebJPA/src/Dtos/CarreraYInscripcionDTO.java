@@ -2,14 +2,14 @@ package Dtos;
 
 import entity.Carrera;
 
-public class CarreraYCantidadDTO {
+public class CarreraYInscripcionDTO {
     private Carrera c;
     private int cantidad;
-    public CarreraYCantidadDTO(Carrera c, int cantidad) {
+    public CarreraYInscripcionDTO(Carrera c, int cantidad) {
         this.c = c;
         this.cantidad = cantidad;
     }
-    public CarreraYCantidadDTO() {
+    public CarreraYInscripcionDTO() {
         super();
     }
     @Override
